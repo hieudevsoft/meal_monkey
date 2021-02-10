@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Meal_Monkey">
-        <activity android:name="screens.getting_started_screen"></activity>
+        <activity android:name="screens.signup"></activity>
+        <activity android:name="screens.singup" />
+        <activity android:name="screens.login" />
+        <activity android:name="screens.getting_started_screen" />
         <activity android:name="screens.splash_screen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

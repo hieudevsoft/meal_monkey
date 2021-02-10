@@ -15,7 +15,7 @@ class splash_screen : AppCompatActivity() {
         binding = ActivitySplashScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Animation.animationSplashScreen(binding.mainLayoutSplash)
-        Tools.moveScreenSplashToGettingStarted(3500,this,getting_started_screen::class.java)
+        Tools.moveScreenToGettingStarted(3500,this,getting_started_screen::class.java)
     }
 
     override fun onResume() {

@@ -11,4 +11,12 @@
     <color name="secondary_font_color">#7c7d7e</color>
     <color name="primary_font_color">#4a4b4d</color>
     <color name="main_color">#fc6011</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+    <color name="light_blue_A200">#FF40C4FF</color>
+    <color name="light_blue_A400">#FF00B0FF</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="gray_shadow">#F2F2F2</color>
+    <color name="blue_facebook">#367FC0</color>
+    <color name="red_google">#DD4B39</color>
 </resources>
