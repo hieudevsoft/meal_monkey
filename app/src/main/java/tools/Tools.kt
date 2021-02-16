@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
+import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -14,6 +16,8 @@ import android.view.WindowInsetsController
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.DecelerateInterpolator
+import android.widget.TextView
+import com.google.android.material.snackbar.Snackbar
 import com.project.mealmonkey.R
 import screens.getting_started_screen
 import screens.login
@@ -83,6 +87,22 @@ object Tools {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
+    fun showSnackbar(view: View,isConnection: Boolean){
+        val color:Int?
+        val message:String
+        if(isConnection){
+            message = "Connected to Internet"
+            color = Color.WHITE
+        }else{
+            message = "Not Connected to Internet"
+            color = Color.RED
+        }
+        val snackbar = Snackbar.make(view,message,Snackbar.LENGTH_LONG)
+        val viewSnackbar = snackbar.view
+        viewSnackbar.findViewById<TextView>(R.id.snackbar_text).setTextColor(color)
+        snackbar.show()
+    }
+
     class FullScreenThread(_miliseconds: Long, activity: Activity, window: Window) {
         var miliseconds = _miliseconds
         var runnableFullScreen: ThreadFullScreen
@@ -100,6 +120,6 @@ object Tools {
         fun stop() {
             runnableFullScreen.stop()
         }
-
     }
+
 }
