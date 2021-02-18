@@ -1,19 +1,19 @@
 package screens
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.project.mealmonkey.databinding.ActivitySignupBinding
 import networks.ConnectionReceiver
 import networks.NetworkHelper
 import tools.Tools
 
-class signup : AppCompatActivity(),ConnectionReceiver.ReceiverListener {
+class SignUp : AppCompatActivity(),ConnectionReceiver.ReceiverListener {
     lateinit var binding: ActivitySignupBinding
     lateinit var threadFullScreen:Tools.FullScreenThread
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
-        threadFullScreen = Tools.FullScreenThread(1500, this, window)
+        threadFullScreen = Tools.FullScreenThread(1500,this,window)
         setContentView(binding.root)
         binding.btnSignUp.setOnClickListener {
             NetworkHelper.checkInternet(this,this)
@@ -25,6 +25,10 @@ class signup : AppCompatActivity(),ConnectionReceiver.ReceiverListener {
         super.onPause()
     }
     override fun onResume() {
+        threadFullScreen?.let {
+            threadFullScreen.clearThread()
+        }
+        threadFullScreen = Tools.FullScreenThread(1500, this, window)
         threadFullScreen.start()
         super.onResume()
     }
@@ -35,6 +39,10 @@ class signup : AppCompatActivity(),ConnectionReceiver.ReceiverListener {
 
     override fun onStop() {
         NetworkHelper.unCheckInternet(this)
+        threadFullScreen.stop()
+        threadFullScreen.let {
+            it.clearThread()
+        }
         super.onStop()
     }
 

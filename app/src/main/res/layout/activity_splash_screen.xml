@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context="screens.splash_screen">
+    tools:context="screens.Splash_Screen">
 
     <FrameLayout
         android:layout_width="match_parent"

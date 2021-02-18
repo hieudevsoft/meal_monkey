@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.project.mealmonkey">
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="com.project.mealmonkey" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Meal_Monkey">
-        <activity android:name="screens.signup"></activity>
+        android:theme="@style/Theme.Meal_Monkey" >
+        <activity android:name="screens.Slider_App" >
+        </activity>
+        <activity android:name="screens.SignUp" />
         <activity android:name="screens.singup" />
-        <activity android:name="screens.login" />
-        <activity android:name="screens.getting_started_screen" />
-        <activity android:name="screens.splash_screen">
+        <activity android:name="screens.Login" />
+        <activity android:name="screens.Getting_Started_Screen" />
+        <activity android:name="screens.Splash_Screen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

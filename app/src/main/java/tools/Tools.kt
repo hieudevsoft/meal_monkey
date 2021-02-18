@@ -1,27 +1,24 @@
 package tools
 
-import android.animation.Animator
+import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.graphics.Color
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.DecelerateInterpolator
 import android.widget.TextView
 import com.google.android.material.snackbar.Snackbar
 import com.project.mealmonkey.R
-import screens.getting_started_screen
-import screens.login
-import screens.signup
+import screens.Getting_Started_Screen
+import screens.Login
+import screens.SignUp
+import screens.Slider_App
 import threads.ThreadFullScreen
 
 
@@ -52,18 +49,20 @@ object Tools {
     fun moveScreenToGettingStarted(
         time: Int,
         context: Activity,
-        cls: Class<getting_started_screen>
+        cls: Class<Getting_Started_Screen>
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(context, cls)
             context.startActivity(intent)
             context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+            context.finish()
         }, time.toLong());
     }
+
     fun moveScreenToLogin(
         time: Int,
         context: Activity,
-        cls: Class<login>
+        cls: Class<Login>
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(context, cls)
@@ -71,15 +70,29 @@ object Tools {
             context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
         }, time.toLong());
     }
+
     fun moveScreenToSignUp(
         time: Int,
         context: Activity,
-        cls: Class<signup>
+        cls: Class<SignUp>
     ) {
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(context, cls)
             context.startActivity(intent)
             context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+        }, time.toLong());
+    }
+
+    fun moveScreenToSliderApp(
+        time: Int,
+        context: Activity,
+        cls: Class<Slider_App>
+    ) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(context, cls)
+            context.startActivity(intent)
+            context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+            context.finish()
         }, time.toLong());
     }
 
@@ -87,17 +100,17 @@ object Tools {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    fun showSnackbar(view: View,isConnection: Boolean){
-        val color:Int?
-        val message:String
-        if(isConnection){
+    fun showSnackbar(view: View, isConnection: Boolean) {
+        val color: Int?
+        val message: String
+        if (isConnection) {
             message = "Connected to Internet"
             color = Color.WHITE
-        }else{
+        } else {
             message = "Not Connected to Internet"
             color = Color.RED
         }
-        val snackbar = Snackbar.make(view,message,Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
         val viewSnackbar = snackbar.view
         viewSnackbar.findViewById<TextView>(R.id.snackbar_text).setTextColor(color)
         snackbar.show()
@@ -105,21 +118,34 @@ object Tools {
 
     class FullScreenThread(_miliseconds: Long, activity: Activity, window: Window) {
         var miliseconds = _miliseconds
-        var runnableFullScreen: ThreadFullScreen
-        var thread: Thread
+        object onThread{
+            @SuppressLint("StaticFieldLeak")
+            @JvmStatic var runnableFullScreen: ThreadFullScreen? = null
+            @JvmStatic lateinit var thread: Thread
+        }
+
 
         init {
-            runnableFullScreen = ThreadFullScreen(miliseconds, activity, window)
-            thread = Thread(runnableFullScreen)
+            onThread.runnableFullScreen = ThreadFullScreen(miliseconds, activity, window)
+            onThread.thread = Thread(onThread.runnableFullScreen)
         }
 
         fun start() {
-            thread.start()
+            onThread.runnableFullScreen?.start()
+            onThread.thread.start()
         }
 
         fun stop() {
-            runnableFullScreen.stop()
+            Log.d("Thread", "stop: ${onThread.runnableFullScreen}")
+            onThread.runnableFullScreen?.stop()
         }
+
+        fun clearThread(){
+            Log.d("Thread", "clearThread: ${onThread.runnableFullScreen}")
+            onThread.runnableFullScreen = null
+        }
+
+        fun getAddressThread() = onThread.runnableFullScreen
     }
 
 }

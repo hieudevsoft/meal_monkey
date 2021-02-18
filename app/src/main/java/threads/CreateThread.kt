@@ -14,7 +14,7 @@ class ThreadFullScreen(_miliSeconds: Long, private val activity: Activity, _wind
     var cancelThread = true
     override fun run() {
         while (cancelThread) {
-            Log.d("Thread", "run: running")
+            Log.d("Thread", "run: running $this")
             activity.runOnUiThread {
                 Tools.fullScreen(window)
             }
@@ -24,5 +24,8 @@ class ThreadFullScreen(_miliSeconds: Long, private val activity: Activity, _wind
 
     fun stop() {
         cancelThread = false
+    }
+    fun start(){
+        cancelThread = true
     }
 }

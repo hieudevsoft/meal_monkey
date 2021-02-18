@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:weightSum="10"
-    tools:context="screens.getting_started_screen">
+    tools:context="screens.Getting_Started_Screen">
     <FrameLayout
         android:id="@+id/image"
         app:layout_constraintHeight_percent="0.6"

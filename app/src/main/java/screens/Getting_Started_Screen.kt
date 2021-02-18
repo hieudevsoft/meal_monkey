@@ -1,15 +1,12 @@
 package screens
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import com.project.mealmonkey.R
+import androidx.appcompat.app.AppCompatActivity
 import com.project.mealmonkey.databinding.ActivityGettingStartedScreenBinding
-import threads.ThreadFullScreen
 import tools.Tools
-import kotlin.system.exitProcess
 
-class getting_started_screen : AppCompatActivity() {
+class Getting_Started_Screen : AppCompatActivity() {
     lateinit var binding:ActivityGettingStartedScreenBinding
     lateinit var fullScreen:Tools.FullScreenThread
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,19 +16,30 @@ class getting_started_screen : AppCompatActivity() {
         fullScreen = Tools.FullScreenThread(1500,this,window)
         binding.loginGettingStarted.setOnClickListener {
             fullScreen.stop()
-            Tools.moveScreenToLogin(500,this,login::class.java)
+            fullScreen.clearThread()
+            Tools.moveScreenToLogin(1000,this,Login::class.java)
         }
         binding.createAccountGettingStarted.setOnClickListener {
             fullScreen.stop()
-            Tools.moveScreenToSignUp(500,this,signup::class.java)
+            fullScreen.clearThread()
+            Tools.moveScreenToSignUp(1000,this,SignUp::class.java)
         }
-
     }
     override fun onResume() {
+        fullScreen.clearThread()
+        fullScreen = Tools.FullScreenThread(1500,this,window)
+        Log.d("Thread", "onResume: ${fullScreen.getAddressThread()}")
         fullScreen.start()
         super.onResume()
     }
     override fun onBackPressed() {
         Tools.killProcess()
+    }
+
+    override fun onStop() {
+        Log.d("Thread", "onStop: onStop Getting Started")
+        fullScreen.stop()
+        fullScreen.clearThread()
+        super.onStop()
     }
 }
