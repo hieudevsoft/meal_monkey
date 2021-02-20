@@ -6,6 +6,7 @@ import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.project.mealmonkey.databinding.ActivitySliderAppBinding
+import signin_options.SignInWithFacebook
 import tools.Tools
 
 
@@ -17,6 +18,10 @@ class Slider_App : AppCompatActivity() {
         binding = ActivitySliderAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fullScreen = Tools.FullScreenThread(window = window,_miliseconds = 1500,activity = this)
+        binding.logout.setOnClickListener {
+                SignInWithFacebook.instance.logOutWithFacebook(this,binding.logout)
+
+        }
     }
 
     override fun onResume() {

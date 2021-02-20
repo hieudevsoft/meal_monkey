@@ -2,6 +2,7 @@ package tools
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -13,7 +14,9 @@ import android.view.Window
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.widget.TextView
+import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseUser
 import com.project.mealmonkey.R
 import screens.Getting_Started_Screen
 import screens.Login
@@ -116,8 +119,24 @@ object Tools {
         snackbar.show()
     }
 
+    fun makeSnackbar(view: View, message:String,isFailure: Boolean) {
+        val color = if (isFailure) {
+            Color.WHITE
+        } else {
+            Color.RED
+        }
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+        val viewSnackbar = snackbar.view
+        viewSnackbar.findViewById<TextView>(R.id.snackbar_text).setTextColor(color)
+        snackbar.show()
+    }
+
+    fun makeToast(context: Context,message: String){
+        Toast.makeText(context,message,Toast.LENGTH_LONG).show()
+    }
+
     class FullScreenThread(_miliseconds: Long, activity: Activity, window: Window) {
-        var miliseconds = _miliseconds
+        private var miliseconds = _miliseconds
         object onThread{
             @SuppressLint("StaticFieldLeak")
             @JvmStatic var runnableFullScreen: ThreadFullScreen? = null
@@ -146,6 +165,15 @@ object Tools {
         }
 
         fun getAddressThread() = onThread.runnableFullScreen
+    }
+     fun updateLoginUI(context: Activity,user: FirebaseUser?){
+        user.let {
+            Tools.moveScreenToSliderApp(
+                500,
+                context,
+                Slider_App::class.java
+            )
+        }
     }
 
 }
