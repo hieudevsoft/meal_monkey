@@ -159,7 +159,6 @@
         app:layout_constraintTop_toBottomOf="@id/btnLoginWithFacebook"
         app:layout_constraintVertical_bias="0.08" />
     <LinearLayout
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -174,6 +173,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
+        android:id="@+id/tvSignUp"
         android:textColor="@color/main_color"
         android:textStyle="bold"
         android:textSize="16sp"

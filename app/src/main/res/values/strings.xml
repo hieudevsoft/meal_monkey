@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Meal_Monkey</string>
 
@@ -22,7 +23,6 @@
     <string name="sign_up">Sign Up</string>
 
 
-
     //SignUp screen
     <string name="undertext_signup">Add your details sign up</string>
     <string name="name">Name</string>
@@ -34,5 +34,15 @@
     <string name="log_in">Log In</string>
     <string name="login_with_google">Login with Google </string>
 
+    //Reset Pass Screen
+    <string name="reset_pass">Reset Password</string>
+    <string name="des_reset_pass">Please enter your email to receive a <br /> link to create a new password via email</string>
+    <string name="send">Send</string>
 
+    //OTP Screen
+    <string name="text_otp_screen">We have sent an OTP to<br/>your Mobile</string>
+    <string name="des_otp_screen">Please check your mobile number<br/>continue to reset your password</string>
+    <string name="next">Next</string>
+    <string name="didn_t_recieve">Didn\'t Recieve?</string>
+    <string name="click_here">Click Here</string>
 </resources>

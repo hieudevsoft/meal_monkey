@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import screens.Login
 
 class FirebaseAuthManager private constructor() {
-    private lateinit var firebaseAuthState:FirebaseAuth.AuthStateListener
+    private  var firebaseAuthState:FirebaseAuth.AuthStateListener?=null
     private var firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     private object Holder{
         val instance = FirebaseAuthManager()
@@ -15,9 +15,9 @@ class FirebaseAuthManager private constructor() {
     }
     fun getCurrentUser() = firebaseAuth.currentUser
     fun getFirebaseAuth() = firebaseAuth
-    fun getState():FirebaseAuth.AuthStateListener = firebaseAuthState
+    fun getState():FirebaseAuth.AuthStateListener? = firebaseAuthState
     fun attachState(){
-        firebaseAuth.addAuthStateListener(firebaseAuthState)
+        firebaseAuthState?.let { firebaseAuth.addAuthStateListener(it) }
     }
     fun operationStateAuthFirebase(context: Activity){
         firebaseAuthState = FirebaseAuth.AuthStateListener {

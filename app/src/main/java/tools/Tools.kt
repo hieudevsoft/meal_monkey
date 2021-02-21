@@ -18,10 +18,7 @@ import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.project.mealmonkey.R
-import screens.Getting_Started_Screen
-import screens.Login
-import screens.SignUp
-import screens.Slider_App
+import screens.*
 import threads.ThreadFullScreen
 
 
@@ -98,6 +95,33 @@ object Tools {
             context.finish()
         }, time.toLong());
     }
+
+    fun moveScreenToResetPass(
+        time: Int,
+        context: Activity,
+        cls: Class<ResetPassword>
+    ) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(context, cls)
+            context.startActivity(intent)
+            context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+            context.finish()
+        }, time.toLong());
+    }
+
+    fun moveScreenToOtpScreen(
+        time: Int,
+        context: Activity,
+        cls: Class<OTP_Screen>
+    ) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(context, cls)
+            context.startActivity(intent)
+            context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+            context.finish()
+        }, time.toLong());
+    }
+
 
     fun killProcess() {
         android.os.Process.killProcess(android.os.Process.myPid());

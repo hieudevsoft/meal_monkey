@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.project.mealmonkey.databinding.ActivitySliderAppBinding
 import signin_options.SignInWithFacebook
+import signin_options.SignInWithGoogle
 import tools.Tools
 
 
@@ -19,8 +20,13 @@ class Slider_App : AppCompatActivity() {
         setContentView(binding.root)
         fullScreen = Tools.FullScreenThread(window = window,_miliseconds = 1500,activity = this)
         binding.logout.setOnClickListener {
-                SignInWithFacebook.instance.logOutWithFacebook(this,binding.logout)
-
+            if(SignInWithGoogle.instance.checkLoginWithGoogle(this)) SignInWithGoogle.instance.logOutGoogle(this,binding.logout)
+            else SignInWithFacebook.instance.logOutWithFacebook(this,binding.logout)
+        }
+        binding.checkScreenOTP.setOnClickListener {
+            fullScreen.stop()
+            fullScreen.clearThread()
+            Tools.moveScreenToOtpScreen(500,this,OTP_Screen::class.java)
         }
     }
 

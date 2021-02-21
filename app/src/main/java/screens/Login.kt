@@ -43,7 +43,16 @@ class Login : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
             fullScreen.clearThread()
         }
         SignInWithFacebook.instance.logInWithFaceBook(this,binding.btnLoginWithFacebook)
-
+        binding.tvSignUp.setOnClickListener {
+            fullScreen.stop()
+            fullScreen.clearThread()
+            Tools.moveScreenToSignUp(500,this,SignUp::class.java)
+        }
+        binding.tvForgotPass.setOnClickListener {
+            fullScreen.stop()
+            fullScreen.clearThread()
+            Tools.moveScreenToResetPass(500,this,ResetPassword::class.java)
+        }
     }
 
     private fun subscribeObservers() {

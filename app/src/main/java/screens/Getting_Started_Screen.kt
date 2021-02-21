@@ -48,8 +48,10 @@ class Getting_Started_Screen : AppCompatActivity() {
         Log.d("Thread", "onStop: onStop Getting Started")
         fullScreen.stop()
         fullScreen.clearThread()
-        FirebaseAuthManager.instance.getState().let {
-            FirebaseAuthManager.instance.getFirebaseAuth().removeAuthStateListener(it)
+        if(FirebaseAuthManager.instance.getState()!=null){
+            FirebaseAuthManager.instance.getFirebaseAuth().removeAuthStateListener(
+                FirebaseAuthManager.instance.getState()!!
+            )
         }
         super.onStop()
     }
