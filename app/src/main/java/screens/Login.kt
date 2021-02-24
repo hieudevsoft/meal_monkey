@@ -15,13 +15,16 @@ import networks.NetworkHelper
 import signin_options.SignInWithFacebook
 import signin_options.SignInWithGoogle
 import tools.Tools
+import viewmodels.ViewModelsLogin
 import viewmodels.ViewModelsSignInGoogle
 
 class Login : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
     lateinit var binding: ActivityLoginBinding
     lateinit var fullScreen: Tools.FullScreenThread
     lateinit var viewModelSignInGoogle: ViewModelsSignInGoogle
+    lateinit var viewModelLoginEmail: ViewModelsLogin
     lateinit var firebaseAuth: FirebaseAuth
+    private val dialogLoading = Tools.LoadingDialog(this)
     val SIGN_IN_GOOGLE_REQUEST_CODE = 100
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +32,9 @@ class Login : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
         setContentView(binding.root)
         NetworkHelper.checkInternet(this, this)
         fullScreen = Tools.FullScreenThread(100, this, window)
-        binding.btnLogin.setOnClickListener {
-            Tools.moveScreenToSliderApp(1000, this, Slider_App::class.java)
-        }
         firebaseAuth = FirebaseAuth.getInstance()
         viewModelSignInGoogle = ViewModelProvider(this).get(ViewModelsSignInGoogle::class.java)
+        viewModelLoginEmail = ViewModelProvider(this).get(ViewModelsLogin::class.java)
         subscribeObservers()
         binding.btnLoginWithGoogle.setOnClickListener {
             viewModelSignInGoogle.retrieveIntentSignInGoogle(this)
@@ -41,6 +42,8 @@ class Login : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
         binding.btnLogin.setOnClickListener {
             fullScreen.stop()
             fullScreen.clearThread()
+            viewModelLoginEmail.login(binding.edtEmail.text.toString(),binding.edtPassword.text.toString())
+            dialogLoading.startLoadingDialog()
         }
         SignInWithFacebook.instance.logInWithFaceBook(this,binding.btnLoginWithFacebook)
         binding.tvSignUp.setOnClickListener {
@@ -56,6 +59,29 @@ class Login : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
     }
 
     private fun subscribeObservers() {
+
+        viewModelLoginEmail.getResultLogin().observe(this, {
+            if (it && !viewModelLoginEmail.getRequestTimeOutLogin().value!!) {
+                dialogLoading.dismissDialog()
+                viewModelLoginEmail.didLoginSuccess = true
+                Tools.makeToast(this, "Login Successfully")
+                Tools.moveScreenToSliderApp(500,this,Slider_App::class.java)
+            } else {
+                dialogLoading.dismissDialog()
+                Tools.makeSnackbar(
+                    binding.btnLogin,
+                    viewModelLoginEmail.getResultException().value!!,
+                    false
+                )
+            }
+        })
+
+        viewModelLoginEmail.getRequestTimeOutLogin().observe(this,{
+            if(it && !viewModelLoginEmail.didLoginSuccess){
+                dialogLoading.dismissDialog()
+                Tools.makeSnackbar(binding.btnLogin,"Request Time out ~ Login failure ! ",false)
+            }
+        })
         viewModelSignInGoogle.getIntentSignInWithGoogle().observe(this, {
             it?.let {
                 viewModelSignInGoogle.didRetrieveIntentGoogle = true

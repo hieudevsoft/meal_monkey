@@ -10,31 +10,39 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import classes.Profile
 import com.project.mealmonkey.R
 import com.project.mealmonkey.databinding.ActivitySignupBinding
 import networks.ConnectionReceiver
 import networks.NetworkHelper
+import tools.FirebaseAuthManager
+import tools.FirebaseDatabaseManager
 import tools.Tools
 import viewmodels.ViewModelsLogic
+import viewmodels.ViewModelsRegister
 
 class SignUp : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
     lateinit var binding: ActivitySignupBinding
     lateinit var threadFullScreen: Tools.FullScreenThread
     lateinit var logicModel: ViewModelsLogic
-
+    lateinit var viewModelRegister: ViewModelsRegister
+    private val dialogLoading = Tools.LoadingDialog(this)
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         threadFullScreen = Tools.FullScreenThread(1000, this, window)
         logicModel = ViewModelProvider(this).get(ViewModelsLogic::class.java)
+        viewModelRegister = ViewModelProvider(this).get(ViewModelsRegister::class.java)
         setContentView(binding.root)
         subscribeObservers()
         checkLogic()
         binding.btnSignUp.setOnClickListener {
             threadFullScreen.stop()
             threadFullScreen.clearThread()
+            dialogLoading.startLoadingDialog()
             NetworkHelper.checkInternet(this, this)
+            viewModelRegister.register(binding.edtEmail.text.toString(),binding.edtPassword.text.toString())
         }
         binding.tvLogin.setOnClickListener {
             threadFullScreen.stop()
@@ -149,8 +157,8 @@ class SignUp : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
         logicModel.validAccount(
             binding.edtName.text.toString(),
             binding.edtEmail.text.toString(),
-            binding.edtAddress.text.toString(),
             binding.edtMobile.text.toString(),
+            binding.edtAddress.text.toString(),
             binding.edtPassword.text.toString(),
             binding.edtCfPassword.text.toString()
         )
@@ -158,6 +166,42 @@ class SignUp : AppCompatActivity(), ConnectionReceiver.ReceiverListener {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun subscribeObservers() {
+
+        viewModelRegister.getResultRegister().observe(this, {
+            if (it && !viewModelRegister.getRequestTimeOutRegister().value!!) {
+                dialogLoading.dismissDialog()
+                viewModelRegister.didRegisterSuccess = true
+                FirebaseDatabaseManager.instance.writeProfile(
+                    "users",
+                    Profile(
+                        FirebaseAuthManager.instance.getCurrentUser()?.uid,
+                        binding.edtEmail.text.toString(),
+                        binding.edtPassword.text.toString(),
+                        binding.edtName.text.toString(),
+                        binding.edtAddress.text.toString(),
+                        binding.edtMobile.text.toString(),
+                        "", 0, ""
+                    )
+                )
+                Tools.moveScreenToSliderApp(500,this,Slider_App::class.java)
+                Tools.makeToast(this, "Register Successfully")
+            } else {
+                dialogLoading.dismissDialog()
+                Tools.makeSnackbar(
+                    binding.btnSignUp,
+                    viewModelRegister.getResultException().value!!,
+                    false
+                )
+            }
+        })
+
+        viewModelRegister.getRequestTimeOutRegister().observe(this,{
+            if(it && !viewModelRegister.didRegisterSuccess){
+                dialogLoading.dismissDialog()
+                Tools.makeSnackbar(binding.btnSignUp,"Request Time out ~ Register failure ! ",false)
+            }
+        })
+
         logicModel.getValidName().observe(this, {
             if (!it && it != null) {
                 binding.edtName.error = "Name is not Valid"

@@ -1,33 +1,56 @@
 package screens
 
+import adapter.SliderAdapter
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.asLiveData
 import com.project.mealmonkey.databinding.ActivitySliderAppBinding
-import signin_options.SignInWithFacebook
-import signin_options.SignInWithGoogle
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import repositories.DataStoreRepository
 import tools.Tools
 
 
 class Slider_App : AppCompatActivity() {
     lateinit var binding:ActivitySliderAppBinding
     lateinit var fullScreen: Tools.FullScreenThread
+    lateinit var sliderAdapter: SliderAdapter
+    lateinit var dataStoreRepository: DataStoreRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySliderAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
         fullScreen = Tools.FullScreenThread(window = window,_miliseconds = 1500,activity = this)
-        binding.logout.setOnClickListener {
-            if(SignInWithGoogle.instance.checkLoginWithGoogle(this)) SignInWithGoogle.instance.logOutGoogle(this,binding.logout)
-            else SignInWithFacebook.instance.logOutWithFacebook(this,binding.logout)
+        initSliderView()
+        dataStoreRepository = DataStoreRepository(this)
+        binding.btnNext.setOnClickListener {
+            //SignInWithFacebook.instance.logOutWithFacebook(this,it)
+            GlobalScope.launch {
+                dataStoreRepository.saveStateSkip(false)
+            }
         }
-        binding.checkScreenOTP.setOnClickListener {
-            fullScreen.stop()
-            fullScreen.clearThread()
-            Tools.moveScreenToOtpScreen(500,this,OTP_Screen::class.java)
+        subscribeObservers()
+        binding.btnSkip.setOnClickListener {
+            GlobalScope.launch {
+                dataStoreRepository.saveStateSkip(true)
+            }
         }
+    }
+
+    private fun subscribeObservers(){
+        dataStoreRepository.readStateKip()
+            .asLiveData().observe(this){
+                if(it){
+                    Tools.makeToast(this,"Already Skip")
+                }else{
+                    Tools.makeToast(this,"Not Skip")
+                }
+            }
     }
 
     override fun onResume() {
@@ -53,5 +76,13 @@ class Slider_App : AppCompatActivity() {
         fullScreen.stop()
         fullScreen.clearThread()
         finish()
+    }
+
+    private fun initSliderView(){
+        sliderAdapter = SliderAdapter(this)
+        binding.sliderView.setSliderAdapter(sliderAdapter)
+        binding.sliderView.setIndicatorAnimation(IndicatorAnimationType.WORM)
+        binding.sliderView.setSliderTransformAnimation(SliderAnimations.CUBEINSCALINGTRANSFORMATION)
+        binding.sliderView.startAutoCycle()
     }
 }

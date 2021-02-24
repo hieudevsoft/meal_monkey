@@ -2,9 +2,11 @@ package tools
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
@@ -198,6 +200,23 @@ object Tools {
                 Slider_App::class.java
             )
         }
+    }
+
+    class LoadingDialog(_activity:Activity){
+        private val activity = _activity
+        lateinit var dialog : AlertDialog
+
+        fun startLoadingDialog(){
+            val alertDialog = AlertDialog.Builder(activity)
+            alertDialog.setView(activity.layoutInflater.inflate(R.layout.dialog_loading,null))
+            alertDialog.setCancelable(false)
+            dialog = alertDialog.create()
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
+            dialog.show()
+        }
+
+        fun dismissDialog() = dialog.dismiss()
+
     }
 
 }

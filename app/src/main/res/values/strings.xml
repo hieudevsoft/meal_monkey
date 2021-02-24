@@ -45,4 +45,13 @@
     <string name="next">Next</string>
     <string name="didn_t_recieve">Didn\'t Recieve?</string>
     <string name="click_here">Click Here</string>
+
+    //On Boarding Screen
+    <string name="header_on_boarding_1">Find Food You Love</string>
+    <string name="text_on_boarding_1">Discover the best foods from over 1,000<br/>restaurants and fast delivery to your doorstep</string>
+    <string name="header_on_boarding_2">Fast Delivery</string>
+    <string name="text_on_boarding_2">Fast food delivery to your home, office<br/>wherever you are</string>
+    <string name="header_on_boarding_3">Live Tracking</string>
+    <string name="text_on_boarding_3">Real time tracking of your food on the app<br/>nonce you placed the order</string>
+    <string name="skip">Skip</string>
 </resources>
