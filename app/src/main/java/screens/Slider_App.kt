@@ -30,9 +30,7 @@ class Slider_App : AppCompatActivity() {
         dataStoreRepository = DataStoreRepository(this)
         binding.btnNext.setOnClickListener {
             //SignInWithFacebook.instance.logOutWithFacebook(this,it)
-            GlobalScope.launch {
-                dataStoreRepository.saveStateSkip(false)
-            }
+            Tools.moveScreenToHomeScreen(500,this,HomePage_App::class.java)
         }
         subscribeObservers()
         binding.btnSkip.setOnClickListener {
@@ -46,6 +44,7 @@ class Slider_App : AppCompatActivity() {
         dataStoreRepository.readStateKip()
             .asLiveData().observe(this){
                 if(it){
+                    Tools.moveScreenToHomeScreen(500,this,HomePage_App::class.java)
                     Tools.makeToast(this,"Already Skip")
                 }else{
                     Tools.makeToast(this,"Not Skip")

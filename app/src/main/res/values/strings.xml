@@ -40,18 +40,46 @@
     <string name="send">Send</string>
 
     //OTP Screen
-    <string name="text_otp_screen">We have sent an OTP to<br/>your Mobile</string>
-    <string name="des_otp_screen">Please check your mobile number<br/>continue to reset your password</string>
+    <string name="text_otp_screen">We have sent an OTP to<br />your Mobile</string>
+    <string name="des_otp_screen">Please check your mobile number<br />continue to reset your password</string>
     <string name="next">Next</string>
     <string name="didn_t_recieve">Didn\'t Recieve?</string>
     <string name="click_here">Click Here</string>
 
     //On Boarding Screen
     <string name="header_on_boarding_1">Find Food You Love</string>
-    <string name="text_on_boarding_1">Discover the best foods from over 1,000<br/>restaurants and fast delivery to your doorstep</string>
+    <string name="text_on_boarding_1">Discover the best foods from over 1,000<br />restaurants and fast delivery to your doorstep</string>
     <string name="header_on_boarding_2">Fast Delivery</string>
-    <string name="text_on_boarding_2">Fast food delivery to your home, office<br/>wherever you are</string>
+    <string name="text_on_boarding_2">Fast food delivery to your home, office<br />wherever you are</string>
     <string name="header_on_boarding_3">Live Tracking</string>
-    <string name="text_on_boarding_3">Real time tracking of your food on the app<br/>nonce you placed the order</string>
+    <string name="text_on_boarding_3">Real time tracking of your food on the app<br />nonce you placed the order</string>
     <string name="skip">Skip</string>
+
+    //Fragment Home App Screen
+    <string name="good_morning">Good morning Akila!</string>
+    <string name="search">Search</string>
+    <string name="popular_restaurents">Popular Restaurents</string>
+    <string name="view_all">View All</string>
+    <string name="most_popular">Most popular</string>
+    <string name="recents_items">Recents Items</string>
+
+    //Fragment Menu App Screen
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu">Menu</string>
+    <string name="search_food">Search food</string>
+    <string name="food">Food</string>
+
+
+    //Fragment More
+    <string name="more">More</string>
+    <string name="text_header_first_more">Payment Detail</string>
+    <string name="text_header_second_more">My Orders</string>
+    <string name="text_header_third_more">Notifications</string>
+    <string name="text_header_four_more">Inbox</string>
+    <string name="text_header_five_more">About us</string>
+    <string name="delivery_address">Delivery Address</string>
+
+    //Fragment orders
+    <string name="my_orders">My Orders</string>
+    <string name="checkout">Checkout</string>
 </resources>

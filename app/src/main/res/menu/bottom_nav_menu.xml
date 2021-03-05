@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuApp"
+        android:icon="@drawable/ic_menu"
+        android:title="Menu" />
+
+    <item
+        android:id="@+id/offerApp"
+        android:icon="@drawable/ic_offer"
+        android:title="Offers" />
+
+    <item
+        android:id="@+id/placeholder"
+        android:title="" />
+
+    <item
+        android:id="@+id/myOrders"
+        android:icon="@drawable/ic_profile"
+        android:title="Profile" />
+
+    <item
+        android:id="@+id/moreApp"
+        android:icon="@drawable/ic_more"
+        android:title="More" />
+
+</menu>

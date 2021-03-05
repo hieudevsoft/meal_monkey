@@ -124,6 +124,18 @@ object Tools {
         }, time.toLong());
     }
 
+    fun moveScreenToHomeScreen(
+        time: Int,
+        context: Activity,
+        cls: Class<HomePage_App>
+    ) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            val intent = Intent(context, cls)
+            context.startActivity(intent)
+            context.overridePendingTransition(R.anim.enter_from_left, R.anim.exit_out_left)
+            context.finish()
+        }, time.toLong());
+    }
 
     fun killProcess() {
         android.os.Process.killProcess(android.os.Process.myPid());

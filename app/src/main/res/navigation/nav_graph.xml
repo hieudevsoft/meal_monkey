@@ -1,5 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeApp">
 
+    <fragment
+        android:id="@+id/homeApp"
+        android:name="fragments.HomeApp"
+        android:label="fragment_home_app"
+        tools:layout="@layout/fragment_home_app" />
+    <fragment
+        android:id="@+id/menuApp"
+        android:name="fragments.MenuApp"
+        android:label="fragment_menu_app"
+        tools:layout="@layout/fragment_menu_app" />
+    <fragment
+        android:id="@+id/offerApp"
+        android:name="fragments.OfferApp"
+        android:label="fragment_offer_app"
+        tools:layout="@layout/fragment_offer_app" />
+    <fragment
+        android:id="@+id/moreApp"
+        android:name="fragments.MoreApp"
+        android:label="fragment_more_app"
+        tools:layout="@layout/fragment_more_app" />
+    <fragment
+        android:id="@+id/myOrders"
+        android:name="fragments.MyOrders"
+        android:label="fragment_my_orders"
+        tools:layout="@layout/fragment_my_orders" />
 </navigation>

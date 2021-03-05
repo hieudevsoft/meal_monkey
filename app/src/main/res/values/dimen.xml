@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //Dime detail order food
+    <item name="margin_right" type="dimen">21dp</item>
+    <item name="margin_top" type="dimen">30dp</item>
+    <item name="margin_top_2" type="dimen">30dp</item>
+    <item name="padding_left" type="dimen">10dp</item>
+    <item name="padding_top" type="dimen">10dp</item>
+
+</resources>
