@@ -11,7 +11,7 @@ import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.firebase.auth.FacebookAuthProvider
 import screens.Login
-import tools.FirebaseAuthManager
+import firebase.FirebaseAuthManager
 import tools.Tools
 
 class SignInWithFacebook private constructor(){
@@ -56,7 +56,7 @@ class SignInWithFacebook private constructor(){
         FirebaseAuthManager.instance.getFirebaseAuth().signInWithCredential(credential).addOnCompleteListener {
             if(it.isSuccessful){
                 Tools.makeToast(context,"Login With FaceBook Successfully")
-                Tools.updateLoginUI(context,FirebaseAuthManager.instance.getCurrentUser())
+                Tools.updateLoginUI(context, FirebaseAuthManager.instance.getCurrentUser())
             }else{
                 Tools.makeSnackbar(loginButton,"Failure Login With Facebook",false)
                 Tools.updateLoginUI(context,null)

@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import tools.AppExecutors
-import tools.FirebaseAuthManager
+import firebase.FirebaseAuthManager
 import values.Constants
 import java.util.concurrent.TimeUnit
 

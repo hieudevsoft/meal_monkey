@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.project.mealmonkey.databinding.ActivityGettingStartedScreenBinding
-import tools.FirebaseAuthManager
+import firebase.FirebaseAuthManager
 import tools.Tools
 
 class Getting_Started_Screen : AppCompatActivity() {

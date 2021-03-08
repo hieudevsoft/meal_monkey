@@ -15,8 +15,8 @@ import com.project.mealmonkey.R
 import com.project.mealmonkey.databinding.ActivitySignupBinding
 import networks.ConnectionReceiver
 import networks.NetworkHelper
-import tools.FirebaseAuthManager
-import tools.FirebaseDatabaseManager
+import firebase.FirebaseAuthManager
+import firebase.FirebaseDatabaseManager
 import tools.Tools
 import viewmodels.ViewModelsLogic
 import viewmodels.ViewModelsRegister

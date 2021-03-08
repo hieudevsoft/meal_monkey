@@ -13,7 +13,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import screens.Login
-import tools.FirebaseAuthManager
+import firebase.FirebaseAuthManager
 import tools.Tools
 import values.Constants
 

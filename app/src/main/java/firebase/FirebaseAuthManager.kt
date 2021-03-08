@@ -1,8 +1,9 @@
-package tools
+package firebase
 
 import android.app.Activity
 import com.google.firebase.auth.FirebaseAuth
 import screens.Login
+import tools.Tools
 
 class FirebaseAuthManager private constructor() {
     private  var firebaseAuthState:FirebaseAuth.AuthStateListener?=null
@@ -22,8 +23,8 @@ class FirebaseAuthManager private constructor() {
     fun operationStateAuthFirebase(context: Activity){
         firebaseAuthState = FirebaseAuth.AuthStateListener {
             val user = it.currentUser
-            if(user!=null) Tools.updateLoginUI(context = context,getCurrentUser()) else
-            Tools.moveScreenToLogin(1000,context,Login::class.java)
+            if(user!=null) Tools.updateLoginUI(context = context, getCurrentUser()) else
+                Tools.moveScreenToLogin(1000, context, Login::class.java)
         }
 
     }
